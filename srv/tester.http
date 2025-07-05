@@ -1,0 +1,102 @@
+### get the details of the service document
+http://localhost:4004/odata/v4/CatalogService/
+
+
+### get Service metadata
+http://localhost:4004/odata/v4/CatalogService/$metadata
+
+
+### get all records of employee
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+
+
+
+###Get data chunk by chunk - pagination
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$top=2&$skip=3
+
+
+###Get the count of records
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/$count
+
+
+###Single Employee Record by its KEY
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/02BD2137-0890-1EEA-A6C2-BB55C19807FB
+
+
+###Filter data by using $filter
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=bankName eq 'My Bank of New York'
+
+
+###Case filtering
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=contains(nameFirst, 'na')
+
+
+###Post data - save data using service
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Content-Type: application/json
+
+
+{
+      "nameFirst": "Christiano",
+      "nameMiddle": "",
+      "nameLast": "Rolando",
+      "nameInitials": null,
+      "sex": "M",
+      "language": "P",
+      "phoneNumber": null,
+      "email": "a@gmail.com",
+      "loginName": "RONALDOCH",
+      "Currency_code": "EUR",
+      "salaryAmount": 10000,
+      "accountNumber": "5566778899",
+      "bankId": "26005885",
+      "bankName": "RBS Bank"
+}
+
+
+###Get the data of new employee - COPY THE ID FROM LAST CALL MANUALLY
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/3e9b87c4-c2f7-4ccb-90be-508f36beedd3
+
+
+###PATCH - used to update data
+PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSet/53b64de8-5465-42c9-811c-4a6f2546c7d6
+Content-Type: application/json
+
+
+{
+    "salaryAmount": 99999
+}
+
+
+###DELETE - Remove data from DB
+DELETE http://localhost:4004/odata/v4/CatalogService/EmployeeSet/3e9b87c4-c2f7-4ccb-90be-508f36beedd3
+
+###Test the V2 response
+http://localhost:4004/odata/v2/CatalogService/EmployeeSet
+
+
+####Lazy loading concept headers
+http://localhost:4004/odata/v2/CatalogService/CDSSet
+
+####Lazy loading concept
+http://localhost:4004/odata/v2/CatalogService/CDSSet('74867AD200E41EDBA5D8B06B26EB6052')?$expand=To_Items
+
+
+###Get the PO Data
+ http://localhost:4004/odata/v4/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC2A052
+
+
+### calling the action on PO 
+post http://localhost:4004/odata/v2/CatalogService/POs/74867AD200E41EDBA5D8B0C98DC2A052/boost
+Content-Type: application/json
+
+{}
+
+
+
+### calling the function 
+http://localhost:4004/odata/v4/CatalogService/getLargestOrder()
+
+
+### update the records with on functionality replacing the asis
+http://localhost:4004/odata/v4/myService/EmployeesSrv
