@@ -2,10 +2,13 @@ using { girish.db.master, girish.db.transaction } from '../db/datamodel';
 using { cappo.cds  } from '../db/CDSView';
 
 
-service CatalogService @(path: 'CatalogService') {
+service CatalogService @(path: 'CatalogService', requires:'authenticated-user') {
 
-
-    entity EmployeeSet as projection on master.employees;
+ 
+    entity EmployeeSet 
+    @(restrict: [ { grant: 'READ', to:'Viewer', where: 'bankName = $user.BankName' }, 
+                  { grant: 'WRITE', to:'Admin' } ])
+                  as projection on master.employees;
     entity AddressSet as projection on master.address;
     entity businesspartner as projection on master.businesspartner;
     entity ProductSet as projection on master.product;
@@ -33,6 +36,12 @@ service CatalogService @(path: 'CatalogService') {
     }
     //instance bound action
     actions{
+       @Common.SideEffects : {
+           TargetProperties : [
+            'in/GROSS_AMOUNT'
+           ]
+           
+       }
         action boost() returns POs;
     };
     entity POItems as projection on transaction.poitems;

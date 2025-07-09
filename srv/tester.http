@@ -95,7 +95,7 @@ Content-Type: application/json
 
 
 ### calling the function 
-http://localhost:4004/odata/v4/CatalogService/getLargestOrder()
+http://localhost:4004   getLargestOrder()
 
 
 ### update the records with on functionality replacing the asis
